@@ -6,6 +6,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+//<T> — это дженерик-параметр (позволяет работать с разными типами данных)
 public class BubbleSortThreadPool<T extends Comparable<T>> implements ISortStrategy<T> {
     private static final int THREAD_COUNT = 2;  // Минимум 2 потока
     @Override
