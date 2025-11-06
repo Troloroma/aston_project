@@ -1,7 +1,5 @@
 package models;
 
-import java.util.Comparator;
-
 /***
  * Use example:
  * List<Student> students = new ArrayList<>();
@@ -12,38 +10,52 @@ import java.util.Comparator;
  *                 .grade(10)
  *                 .build());
  */
-public class Student implements Comparable<Student>{
+public class Student implements Person {
     private final String firstName;
     private final String lastName;
     private final int age;
     private final int grade; // from 1 to 11
+    private final int id;
 
     public Student(StudentBuilder builder) {
-        if(builder == null) throw new IllegalArgumentException("builder cannot be null");
+        if (builder == null) throw new IllegalArgumentException("Builder cannot be null");
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
         this.age = builder.age;
         this.grade = builder.grade;
+        this.id = builder.id;
     }
 
-    public String getFirstName() { return firstName; }
-    public String getLastName() { return lastName; }
-    public int getAge() { return age; }
-    public int getGrade() { return grade; }
+    @Override
+    public String getFirstName() {
+        return firstName;
+    }
+
+    @Override
+    public String getLastName() {
+        return lastName;
+    }
+
+    @Override
+    public int getId() {
+        return 0;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public int getGrade() {
+        return grade;
+    }
 
     @Override
     public String toString() {
-        return "Student [firstName=" + firstName + ", lastName=" + lastName + ", age=" + age + ", grade=" + grade + "]";
-    }
-
-
-    @Override
-    public int compareTo(Student otherStudent) {
-        return Comparator.comparing(Student::getLastName)
-                .thenComparing(Student::getFirstName)
-                .thenComparingInt(Student::getGrade)
-                .thenComparingInt(Student::getAge)
-                .compare(this, otherStudent);
+        return "Student [firstName=" + firstName +
+                ", lastName=" + lastName +
+                ", age=" + age +
+                ", grade=" + grade +
+                ", id=" + id + "]";
     }
 
     public static class StudentBuilder {
@@ -51,6 +63,7 @@ public class Student implements Comparable<Student>{
         private String lastName;
         private int age;
         private int grade;
+        private int id;
 
         public StudentBuilder firstName(String firstName) {
             this.firstName = firstName;
@@ -72,8 +85,13 @@ public class Student implements Comparable<Student>{
             return this;
         }
 
+        public StudentBuilder id(int id) {
+            this.id = id;
+            return this;
+        }
+
         public Student build() {
-            if(!validateStudent()) {
+            if (!validateStudent()) {
                 throw new IllegalArgumentException("Some of the fields are invalid");
             }
             return new Student(this);
@@ -83,7 +101,8 @@ public class Student implements Comparable<Student>{
             return (firstName != null && !firstName.trim().isEmpty()
                     && lastName != null && !lastName.trim().isEmpty()
                     && age >= 0
-                    && grade > 0 && grade <= 11);
+                    && grade > 0 && grade <= 11
+                    && id >= 0);
         }
     }
 }

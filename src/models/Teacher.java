@@ -1,6 +1,5 @@
 package models;
 
-import java.util.Comparator;
 /***
  * Use example:
  * List<Teacher> teachers = new ArrayList<>();
@@ -11,11 +10,12 @@ import java.util.Comparator;
  *                 .experience(10)
  *                 .build());
  */
-public class Teacher implements Comparable<Teacher> {
+public class Teacher implements Person {
     private final String firstName;
     private final String lastName;
     private final SubjectsEnum subject;
     private final int experience; // in years
+    private final int id;
 
     private Teacher(TeacherBuilder builder) {
         if (builder == null) throw new IllegalArgumentException("Builder cannot be null");
@@ -23,12 +23,15 @@ public class Teacher implements Comparable<Teacher> {
         this.lastName = builder.lastName;
         this.subject = builder.subject != null ? builder.subject : SubjectsEnum.OTHER;
         this.experience = builder.experience;
+        this.id = builder.id;
     }
 
+    @Override
     public String getFirstName() {
         return firstName;
     }
 
+    @Override
     public String getLastName() {
         return lastName;
     }
@@ -42,20 +45,17 @@ public class Teacher implements Comparable<Teacher> {
     }
 
     @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
     public String toString() {
         return "Teacher [firstName=" + firstName +
                 ", lastName=" + lastName +
                 ", subject=" + subject +
-                ", experience=" + experience + "]";
-    }
-
-    @Override
-    public int compareTo(Teacher other) {
-        return Comparator.comparing(Teacher::getLastName)
-                .thenComparing(Teacher::getFirstName)
-                .thenComparing(Teacher::getSubject)
-                .thenComparingInt(Teacher::getExperience)
-                .compare(this, other);
+                ", experience=" + experience +
+                ", id=" + id + "]";
     }
 
     public static class TeacherBuilder {
@@ -63,6 +63,7 @@ public class Teacher implements Comparable<Teacher> {
         private String lastName;
         private SubjectsEnum subject;
         private int experience;
+        private int id;
 
         public TeacherBuilder firstName(String firstName) {
             this.firstName = firstName;
@@ -84,6 +85,11 @@ public class Teacher implements Comparable<Teacher> {
             return this;
         }
 
+        public TeacherBuilder id(int id) {
+            this.id = id;
+            return this;
+        }
+
         public Teacher build() {
             if (!validateTeacher()) {
                 throw new IllegalArgumentException("Some of the fields are invalid");
@@ -94,7 +100,8 @@ public class Teacher implements Comparable<Teacher> {
         private boolean validateTeacher() {
             return (firstName != null && !firstName.trim().isEmpty()
                     && lastName != null && !lastName.trim().isEmpty()
-                    && experience >= 0);
+                    && experience >= 0
+                    && id >= 0);
         }
     }
 }
