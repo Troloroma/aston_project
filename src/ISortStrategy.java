@@ -1,9 +1,13 @@
 package src;
 
-public interface ISortStrategy {
-    /**
-     * Метод для сортировки массива целых чисел.
-     * @param array Массив, который нужно отсортировать.
-     */
-    void Sort(int[] array);
+import java.util.List;
+
+//Реализация паттерна Стратегия
+//Универсальный интерфейс стратегии для любого типа данных T
+public interface ISortStrategy<T extends Comparable<T>> {
+	/**
+	 * Метод для сортировки списка элементов типа T.
+	 * @param t Список, который нужно отсортировать.
+	 */
+	void Sort(List<T> t);
 }
