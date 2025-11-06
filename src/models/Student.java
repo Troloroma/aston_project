@@ -2,6 +2,16 @@ package models;
 
 import java.util.Comparator;
 
+/***
+ * Use example:
+ * List<Student> students = new ArrayList<>();
+ *         students.add(new Student.StudentBuilder()
+ *                 .firstName("Иван")
+ *                 .lastName("Петров")
+ *                 .age(16)
+ *                 .grade(10)
+ *                 .build());
+ */
 public class Student implements Comparable<Student>{
     private final String firstName;
     private final String lastName;
@@ -25,6 +35,7 @@ public class Student implements Comparable<Student>{
     public String toString() {
         return "Student [firstName=" + firstName + ", lastName=" + lastName + ", age=" + age + ", grade=" + grade + "]";
     }
+
 
     @Override
     public int compareTo(Student otherStudent) {
