@@ -1,5 +1,6 @@
 package src.console_app;
 
+import src.binary_search.BinarySearch;
 import src.entity_generator.EntityGenerator;
 import src.io.IoConsole;
 import src.models.*;
@@ -37,7 +38,7 @@ public class ConsoleApp {
                 case "2" -> chooseDataSource();
                 case "3" -> showPeople();
                 case "4" -> sortPeople();
-                case "5" -> binarySearchStub();
+                case "5" -> binarySearchById();
                 case "0" -> {
                     System.out.println("Выход из программы...");
                     return;
@@ -133,8 +134,33 @@ public class ConsoleApp {
         people.forEach(System.out::println);
     }
 
-    private void binarySearchStub() {
-        System.out.println("Бинарный поиск пока не реализован (заглушка).");
+    private void binarySearchById() {
+        if (people == null || people.isEmpty()) {
+            System.out.println("Список пуст — поиск невозможен.");
+            return;
+        }
+
+        System.out.print("Введите id для поиска: ");
+        String raw = scanner.nextLine().trim();
+
+        int targetId;
+        try {
+            targetId = Integer.parseInt(raw);
+        } catch (NumberFormatException ex) {
+            System.out.println("Ошибка: id должен быть числом.");
+            return;
+        }
+
+        List<ComparableEntity> sortedById = new ArrayList<>(people);
+        sortedById.sort(Comparator.comparingInt(ComparableEntity::getId));
+
+        int index = BinarySearch.binarySearchById(sortedById, targetId);
+        if (index >= 0) {
+            ComparableEntity found = sortedById.get(index);
+            System.out.println("Найден объект: " + found);
+        } else {
+            System.out.println("Объект с id " + targetId + " не найден.");
+        }
     }
 
     public static void main(String[] args) {
