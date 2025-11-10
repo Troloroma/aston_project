@@ -14,15 +14,16 @@ public class EntityComparator implements Comparator<ComparableEntity> {
 
     // Компараторы для конкретных классов
     private final Map<Class<?>, Comparator<?>> comparators = Map.of(
-            Teacher.class, Comparator.comparing(Teacher::getLastName)
+            Teacher.class, Comparator.comparing(Teacher::getId)
+                    .thenComparing(Teacher::getLastName)
                     .thenComparing(Teacher::getFirstName)
                     .thenComparingInt(Teacher::getId)
                     .thenComparing(Teacher::getSubject)
                     .thenComparingInt(Teacher::getExperience),
 
-            Student.class, Comparator.comparing(Student::getLastName)
+            Student.class, Comparator.comparing(Student::getId)
+                    .thenComparing(Student::getLastName)
                     .thenComparing(Student::getFirstName)
-                    .thenComparingInt(Student::getId)
                     .thenComparingInt(Student::getGrade)
                     .thenComparingInt(Student::getAge)
     );
