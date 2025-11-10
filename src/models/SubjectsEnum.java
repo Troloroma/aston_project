@@ -1,14 +1,14 @@
 package src.models;
 
 public enum SubjectsEnum {
-	ALGEBRA ("Algebra"),
-	PE("Physical Education"),
-	HISTORY("History"),
-	PHYSICS("Physics"),
-	BIOLOGY("Biology"),
-	GEOGRAPHY("Geography"),
-	GEOMETRY("Geometry"),
-	OTHER("Other");
+	ALGEBRA ("Алгебра"),
+	PE("Физ-ра"),
+	HISTORY("История"),
+	PHYSICS("Физика"),
+	BIOLOGY("Биология"),
+	GEOGRAPHY("География"),
+	GEOMETRY("Геометрия"),
+	OTHER("Другое");
 
 	private final String title;
 

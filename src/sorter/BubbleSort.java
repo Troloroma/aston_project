@@ -1,11 +1,11 @@
-package src;
+package src.sorter;
 
 import java.util.List;
 
 //Сортирует список элементов методом пузырьковой сортировки
 public class BubbleSort<T extends Comparable<T>> implements ISortStrategy<T> {
 	@Override
-	public void Sort(List<T> t) {
+	public void sort(List<T> t) {
 		// Внешний цикл: количество проходов по списку
 		for (int i = 0; i < t.size() - 1; i++) {
 			// Внутренний цикл: сравнение соседних элементов

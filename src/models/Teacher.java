@@ -10,7 +10,7 @@ package src.models;
  *                 .experience(10)
  *                 .build());
  */
-public class Teacher implements Person {
+public class Teacher implements ComparableEntity  {
     private final String firstName;
     private final String lastName;
     private final SubjectsEnum subject;
@@ -26,12 +26,10 @@ public class Teacher implements Person {
         this.id = builder.id;
     }
 
-    @Override
     public String getFirstName() {
         return firstName;
     }
 
-    @Override
     public String getLastName() {
         return lastName;
     }
@@ -44,7 +42,6 @@ public class Teacher implements Person {
         return experience;
     }
 
-    @Override
     public int getId() {
         return id;
     }

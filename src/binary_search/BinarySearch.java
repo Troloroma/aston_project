@@ -1,6 +1,10 @@
-package src;
+package src.binary_search;
 
 public class BinarySearch {
+
+    private BinarySearch() {
+        throw new UnsupportedOperationException("Utility class");
+    }
 
     //Используем дженерик T
     public static <T extends Comparable<T>> int binarySearch(T[] arr, T target) {

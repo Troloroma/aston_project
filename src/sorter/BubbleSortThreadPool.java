@@ -1,4 +1,4 @@
-package src;
+package src.sorter;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -12,7 +12,7 @@ public class BubbleSortThreadPool<T extends Comparable<T>> implements ISortStrat
 	private static final int THREAD_COUNT = 2;	// Минимум 2 потока
 
 	@Override
-	public void Sort(List<T> t) {
+	public void sort(List<T> t) {
 		//если нечего сортировать возвращааемся
         if (t == null || t.size() <= 1) {return;}
 
@@ -37,6 +37,7 @@ public class BubbleSortThreadPool<T extends Comparable<T>> implements ISortStrat
 			throw new RuntimeException("Сортировка прервана", e);
 		} finally {
 			executor.shutdown();
+            executor.close();
 		}
 
 		System.out.println("Список отсортирован пузырьком в " + THREAD_COUNT + " потоках.");
