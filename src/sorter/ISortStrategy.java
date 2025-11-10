@@ -1,4 +1,4 @@
-package src;
+package src.sorter;
 
 import java.util.List;
 
@@ -9,5 +9,5 @@ public interface ISortStrategy<T extends Comparable<T>> {
 	 * Метод для сортировки списка элементов типа T.
 	 * @param t Список, который нужно отсортировать.
 	 */
-	void Sort(List<T> t);
+	void sort(List<T> t);
 }

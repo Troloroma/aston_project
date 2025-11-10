@@ -1,6 +1,6 @@
 package src.tests;
 
-import src.BinarySearch;
+import src.binary_search.BinarySearch;
 
 public class BinarySearchTest {
 	public static void main(String[] args) {
