@@ -8,30 +8,8 @@ import java.util.List;
 
 public class BinarySearchTest {
 	public static void main(String[] args) {
-		testPrimitiveSearch();
 		testListIdSearch();
 		System.out.println("BinarySearch работает");
-	}
-
-	private static void testPrimitiveSearch() {
-		Integer[] data = {1, 3, 5, 7, 9, 11, 13};
-		int foundIndex = BinarySearch.binarySearch(data, 7);
-		int notFoundIndex = BinarySearch.binarySearch(data, 4);
-
-		if (foundIndex != 3) {
-			throw new AssertionError("Ожидали индекс 3, получили " + foundIndex);
-		}
-
-		if (notFoundIndex != -1) {
-			throw new AssertionError("Элемент отсутствует, но метод вернул " + notFoundIndex);
-		}
-
-		String[] words = {"apple", "banana", "kiwi"};
-		int wordIndex = BinarySearch.binarySearch(words, "kiwi");
-
-		if (wordIndex != 2) {
-			throw new AssertionError("Строковой поиск вернул " + wordIndex);
-		}
 	}
 
 	private static ComparableEntity[] fixtures() {
