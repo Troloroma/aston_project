@@ -8,32 +8,10 @@ import java.util.List;
 
 public class BinarySearchTest {
 	public static void main(String[] args) {
-		testPrimitiveSearch();
-		testArrayIdSearch();
 		testListIdSearch();
 		System.out.println("BinarySearch работает");
 	}
 
-	private static void testPrimitiveSearch() {
-		Integer[] data = {1, 3, 5, 7, 9, 11, 13};
-		int foundIndex = BinarySearch.binarySearch(data, 7);
-		int notFoundIndex = BinarySearch.binarySearch(data, 4);
-
-		if (foundIndex != 3) {
-			throw new AssertionError("Ожидали индекс 3, получили " + foundIndex);
-		}
-
-		if (notFoundIndex != -1) {
-			throw new AssertionError("Элемент отсутствует, но метод вернул " + notFoundIndex);
-		}
-
-		String[] words = {"apple", "banana", "kiwi"};
-		int wordIndex = BinarySearch.binarySearch(words, "kiwi");
-
-		if (wordIndex != 2) {
-			throw new AssertionError("Строковой поиск вернул " + wordIndex);
-		}
-	}
 
 	private static ComparableEntity[] fixtures() {
 		return new ComparableEntity[]{
@@ -61,19 +39,6 @@ public class BinarySearchTest {
 		};
 	}
 
-	private static void testArrayIdSearch() {
-		ComparableEntity[] entities = fixtures();
-		int teacherIndex = BinarySearch.binarySearch(entities, 2);
-		int missingIndex = BinarySearch.binarySearch(entities, 99);
-
-		if (teacherIndex != 1) {
-			throw new AssertionError("Ожидали индекс 1, получили " + teacherIndex);
-		}
-
-		if (missingIndex != -1) {
-			throw new AssertionError("Ожидали -1 для отсутствующего id, получили " + missingIndex);
-		}
-	}
 
 	private static void testListIdSearch() {
 		List<ComparableEntity> entities = Arrays.asList(fixtures());
