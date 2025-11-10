@@ -35,34 +35,15 @@ public class BinarySearch {
 		return -1;
 	}
 
-	public static int binarySearch(ComparableEntity[] arr, int targetId) {
-		int left = 0;
-		int right = arr.length - 1;
-
-		while (left <= right) {
-			int mid = left + (right - left) / 2;
-			int midId = arr[mid].getId();
-
-			if (midId == targetId) {
-				return mid;
-			} else if (midId < targetId) {
-				left = mid + 1;
-			} else {
-				right = mid - 1;
-			}
-		}
-
-		return -1;
-	}
-
 	public static <T extends ComparableEntity> int binarySearchById(List<T> list, int targetId) {
 		int left = 0;
 		int right = list.size() - 1;
 
 		while (left <= right) {
 			int mid = left + (right - left) / 2;
+			//получаем idшник
 			int midId = list.get(mid).getId();
-
+			//и сравниваем с целевым
 			if (midId == targetId) {
 				return mid;
 			} else if (midId < targetId) {

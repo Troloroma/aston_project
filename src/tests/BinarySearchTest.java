@@ -9,7 +9,6 @@ import java.util.List;
 public class BinarySearchTest {
 	public static void main(String[] args) {
 		testPrimitiveSearch();
-		testArrayIdSearch();
 		testListIdSearch();
 		System.out.println("BinarySearch работает");
 	}
@@ -59,20 +58,6 @@ public class BinarySearchTest {
 						.id(3)
 						.build()
 		};
-	}
-
-	private static void testArrayIdSearch() {
-		ComparableEntity[] entities = fixtures();
-		int teacherIndex = BinarySearch.binarySearch(entities, 2);
-		int missingIndex = BinarySearch.binarySearch(entities, 99);
-
-		if (teacherIndex != 1) {
-			throw new AssertionError("Ожидали индекс 1, получили " + teacherIndex);
-		}
-
-		if (missingIndex != -1) {
-			throw new AssertionError("Ожидали -1 для отсутствующего id, получили " + missingIndex);
-		}
 	}
 
 	private static void testListIdSearch() {
