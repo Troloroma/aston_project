@@ -41,8 +41,9 @@ public class BinarySearch {
 
 		while (left <= right) {
 			int mid = left + (right - left) / 2;
+			//получаем idшник
 			int midId = list.get(mid).getId();
-
+			//и сравниваем с целевым
 			if (midId == targetId) {
 				return mid;
 			} else if (midId < targetId) {
