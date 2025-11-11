@@ -14,6 +14,9 @@ public class Student implements ComparableEntity {
         this.age = builder.age;
         this.grade = builder.grade;
         this.id = builder.id;
+
+        // уникальность id
+        IdRegistry.registerId(this.id);
     }
 
     public String getFirstName() {

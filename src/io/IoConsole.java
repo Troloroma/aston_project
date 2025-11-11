@@ -48,7 +48,7 @@ public class IoConsole {
         String lastName = readLine("Введите фамилию ученика: ");
         int age = readInt("Введите возраст: ", 5, 25);
         int grade = readInt("Введите класс (1-11): ", 1, 11);
-        int id = readInt("Введите ID: ", 0, Integer.MAX_VALUE);
+        int id = readUniqueId("Введите ID: ");
 
         return new Student.StudentBuilder()
                 .firstName(firstName)
@@ -76,7 +76,7 @@ public class IoConsole {
         Arrays.stream(SubjectsEnum.values()).forEach(s -> System.out.println(" - " + s));
         SubjectsEnum subject = readEnum("Введите предмет: ", SubjectsEnum.class);
         int experience = readInt("Введите опыт (в годах): ", 0, 60);
-        int id = readInt("Введите ID: ", 0, Integer.MAX_VALUE);
+        int id = readUniqueId("Введите ID: ");
 
         return new Teacher.TeacherBuilder()
                 .firstName(firstName)

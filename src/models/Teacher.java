@@ -24,6 +24,9 @@ public class Teacher implements ComparableEntity  {
         this.subject = builder.subject != null ? builder.subject : SubjectsEnum.OTHER;
         this.experience = builder.experience;
         this.id = builder.id;
+
+        // уникальность id
+        IdRegistry.registerId(this.id);
     }
 
     public String getFirstName() {
