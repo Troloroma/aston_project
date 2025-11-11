@@ -1,5 +1,6 @@
 package src.console_app;
 
+import src.DataWriter;
 import src.binary_search.BinarySearch;
 import src.entity_generator.EntityGenerator;
 import src.file_reader.FileEntityReader;
@@ -40,6 +41,7 @@ public class ConsoleApp {
                 case "3" -> showPeople();
                 case "4" -> sortPeople();
                 case "5" -> binarySearchById();
+                case "6" -> saveToFile();
                 case "0" -> {
                     System.out.println("Выход из программы...");
                     return;
@@ -58,6 +60,7 @@ public class ConsoleApp {
                 3 - Показать текущие данные
                 4 - Сортировка списка
                 5 - Бинарный поиск
+                6 - Сохранить данные в файл
                 0 - Выход
                 =========================
                 """);
@@ -168,6 +171,17 @@ public class ConsoleApp {
         } else {
             System.out.println("Объект с id " + targetId + " не найден.");
         }
+    }
+    private void saveToFile() {
+        if (people == null || people.isEmpty()) {
+            System.out.println("Список пуст — нечего сохранять.");
+            return;
+        }
+
+        System.out.print("Введите путь для сохранения (например, D://people.txt): ");
+        String path = scanner.nextLine().trim();
+
+        DataWriter.writeToFile(path, people);
     }
 
     public static void main(String[] args) {
