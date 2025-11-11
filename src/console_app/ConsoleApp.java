@@ -2,6 +2,7 @@ package src.console_app;
 
 import src.binary_search.BinarySearch;
 import src.entity_generator.EntityGenerator;
+import src.file_reader.FileEntityReader;
 import src.io.IoConsole;
 import src.models.*;
 import src.sorter.BubbleSortThreadPool;
@@ -18,7 +19,7 @@ import java.util.*;
  *     <li>Запуск сортировки (с использованием {@link EntityComparator})</li>
  *     <li>Запуск бинарного поиска (заглушка)</li>
  * </ul>
- *
+ * <p>
  * Выход возможен только через пункт меню.
  */
 public class ConsoleApp {
@@ -96,7 +97,13 @@ public class ConsoleApp {
                 people = IoConsole.readCollectionFromConsole(arrayLength);
                 System.out.println("Введено объектов: " + people.size());
             }
-            case "3" -> System.out.println("Чтение из файла пока не реализовано.");
+            case "3" -> {
+                System.out.print("Введите путь к файлу: (например, D://people.txt)\n");
+                String path = scanner.nextLine().trim();
+                people = FileEntityReader.readFromFile(path);
+                System.out.println("Загружено объектов: " + people.size());
+                people.forEach(System.out::println);
+            }
             default -> System.out.println("Некорректный выбор.");
         }
     }
@@ -118,8 +125,8 @@ public class ConsoleApp {
 
         System.out.println("Сортировка (BubbleSortThreadPool) с использованием 2 потоков...");
         System.out.println("Сортировка происходит в следующем порядке: сначала учителя, потом ученики.");
-        System.out.println("Учителя: фамилия -> имя -> id -> предмет преподавания -> опыт работы (в годах)");
-        System.out.println("Ученики: фамилия -> имя -> id -> класс -> возраст");
+        System.out.println("Учителя: id -> фамилия -> имя -> предмет преподавания -> опыт работы (в годах)");
+        System.out.println("Ученики: id -> фамилия -> имя -> класс -> возраст");
         ISortStrategy<ComparableEntity> sorter = new BubbleSortThreadPool<>();
         try {
             sorter.sort(people);
