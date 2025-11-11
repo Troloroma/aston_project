@@ -5,6 +5,8 @@ import src.models.IdRegistry;
 import java.util.Arrays;
 import java.util.Scanner;
 
+
+
 public class ConsoleUtils {
 
     private ConsoleUtils() {
