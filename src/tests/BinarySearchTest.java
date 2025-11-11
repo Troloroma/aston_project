@@ -39,7 +39,6 @@ public class BinarySearchTest {
 		};
 	}
 
-
 	private static void testListIdSearch() {
 		List<ComparableEntity> entities = Arrays.asList(fixtures());
 		int studentIndex = BinarySearch.binarySearchById(entities, 3);
