@@ -2,6 +2,7 @@ package src.console_app;
 
 import src.DataWriter;
 import src.binary_search.BinarySearch;
+import src.counter.OccurrenceCounter;
 import src.entity_generator.EntityGenerator;
 import src.file_reader.FileEntityReader;
 import src.io.IoConsole;
@@ -9,7 +10,9 @@ import src.models.*;
 import src.sorter.BubbleSortThreadPool;
 import src.sorter.ISortStrategy;
 
+
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Консольное приложение с циклом, реализующее:
@@ -42,6 +45,7 @@ public class ConsoleApp {
                 case "4" -> sortPeople();
                 case "5" -> binarySearchById();
                 case "6" -> saveToFile();
+                case "7" -> countElementOccurrences();
                 case "0" -> {
                     System.out.println("Выход из программы...");
                     return;
@@ -61,6 +65,7 @@ public class ConsoleApp {
                 4 - Сортировка списка
                 5 - Бинарный поиск
                 6 - Сохранить данные в файл
+                7 - Посчитать число совпадений по Id
                 0 - Выход
                 =========================
                 """);
@@ -182,6 +187,27 @@ public class ConsoleApp {
         String path = scanner.nextLine().trim();
 
         DataWriter.writeToFile(path, people);
+    }
+    private void countElementOccurrences() {
+        if (people == null || people.isEmpty()) {
+            System.out.println("Список пуст — нечего анализировать.");
+            return;
+        }
+
+        System.out.print("Введите ID (число), чтобы посчитать количество таких ID в коллекции: ");
+        String raw = scanner.nextLine().trim();
+
+        try {
+            int targetId = Integer.parseInt(raw);
+            List<Integer> ids = people.stream()
+                    .map(ComparableEntity::getId)
+                    .collect(Collectors.toList());
+
+            OccurrenceCounter.countOccurrences(ids, targetId);
+
+        } catch (NumberFormatException e) {
+            System.out.println("Ошибка: введите корректное число.");
+        }
     }
 
     public static void main(String[] args) {
