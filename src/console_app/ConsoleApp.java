@@ -8,6 +8,7 @@ import src.file_reader.FileEntityReader;
 import src.io.IoConsole;
 import src.models.*;
 import src.sorter.BubbleSortThreadPool;
+import src.sorter.BubbleSortThreadPoolEvenField;
 import src.sorter.ISortStrategy;
 
 
@@ -46,6 +47,7 @@ public class ConsoleApp {
                 case "5" -> binarySearchById();
                 case "6" -> saveToFile();
                 case "7" -> countElementOccurrences();
+                case "8" -> sortPeopleEvenIds();
                 case "0" -> {
                     System.out.println("Выход из программы...");
                     return;
@@ -66,6 +68,7 @@ public class ConsoleApp {
                 5 - Бинарный поиск
                 6 - Сохранить данные в файл
                 7 - Посчитать число совпадений по Id
+                8 - Сортировка только чётных Id (нечётные остаются на местах)
                 0 - Выход
                 =========================
                 """);
@@ -146,6 +149,26 @@ public class ConsoleApp {
             people = copy;
         }
         System.out.println("\nСписок после сортировки:");
+        people.forEach(System.out::println);
+    }
+
+    private void sortPeopleEvenIds() {
+        if (people == null || people.isEmpty()) {
+            System.out.println("Список пуст — сортировка невозможна.");
+            return;
+        }
+
+        System.out.println("Сортировка только элементов с чётным id, остальные остаются на своих местах.");
+        BubbleSortThreadPoolEvenField<ComparableEntity> sorter = new BubbleSortThreadPoolEvenField<>(ComparableEntity::getId);
+        try {
+            sorter.sort(people);
+        } catch (UnsupportedOperationException ex) {
+            System.out.println("Список не изменяемый, делаю копию.");
+            List<ComparableEntity> copy = new ArrayList<>(people);
+            sorter.sort(copy);
+            people = copy;
+        }
+        System.out.println("\nСписок после сортировки чётных id:");
         people.forEach(System.out::println);
     }
 
