@@ -80,12 +80,12 @@ public class IoConsoleSimpleTest {
         String input = "1\n" + // Выбор типа коллекции: ученики
                 "Иван\n" + // Имя первого студента
                 "Иванов\n" + // Фамилия первого студента
-                "15\n" + // Возраст первого студента
+                "18\n" + // Возраст первого студента
                 "9\n" + // Класс первого студента
                 "1\n" + // ID первого студента
                 "Мария\n" + // Имя второго студента
                 "Петрова\n" + // Фамилия второго студента
-                "14\n" + // Возраст второго студента
+                "19\n" + // Возраст второго студента
                 "8\n" + // Класс второго студента
                 "2\n"; // ID второго студента
 
@@ -102,7 +102,7 @@ public class IoConsoleSimpleTest {
             Student firstStudent = (Student) students.get(0);
             assertEquals("Иван", firstStudent.getFirstName(), "Имя первого студента");
             assertEquals("Иванов", firstStudent.getLastName(), "Фамилия первого студента");
-            assertEquals(15, firstStudent.getAge(), "Возраст первого студента");
+            assertEquals(18, firstStudent.getAge(), "Возраст первого студента");
             assertEquals(9, firstStudent.getGrade(), "Класс первого студента");
             assertEquals(1, firstStudent.getId(), "ID первого студента");
 
@@ -111,7 +111,7 @@ public class IoConsoleSimpleTest {
             Student secondStudent = (Student) students.get(1);
             assertEquals("Мария", secondStudent.getFirstName(), "Имя второго студента");
             assertEquals("Петрова", secondStudent.getLastName(), "Фамилия второго студента");
-            assertEquals(14, secondStudent.getAge(), "Возраст второго студента");
+            assertEquals(19, secondStudent.getAge(), "Возраст второго студента");
             assertEquals(8, secondStudent.getGrade(), "Класс второго студента");
             assertEquals(2, secondStudent.getId(), "ID второго студента");
 
