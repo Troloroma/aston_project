@@ -1,9 +1,6 @@
 package src.file_reader;
 
-import src.models.ComparableEntity;
-import src.models.Student;
-import src.models.SubjectsEnum;
-import src.models.Teacher;
+import src.models.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -100,9 +97,9 @@ public class FileEntityReader {
             return new Teacher.TeacherBuilder()
                     .firstName(data.getOrDefault("Имя", ""))
                     .lastName(data.getOrDefault("Фамилия", ""))
-                    .id(Integer.parseInt(data.getOrDefault("id", "0")))
                     .experience(Integer.parseInt(data.getOrDefault("Стаж", "0")))
                     .subject(parseSubject(data.get("Предмет")))
+                    .id(Integer.parseInt(data.getOrDefault("id", "0")))
                     .build();
         } catch (Exception e) {
             System.out.println("Ошибка при создании учителя: " + e.getMessage());
@@ -122,9 +119,9 @@ public class FileEntityReader {
             return new Student.StudentBuilder()
                     .firstName(data.getOrDefault("Имя", ""))
                     .lastName(data.getOrDefault("Фамилия", ""))
-                    .id(Integer.parseInt(data.getOrDefault("id", "0")))
                     .grade(grade)
                     .age(age)
+                    .id(Integer.parseInt(data.getOrDefault("id", "0")))
                     .build();
         } catch (Exception e) {
             System.out.println("Ошибка при создании ученика: " + e.getMessage());

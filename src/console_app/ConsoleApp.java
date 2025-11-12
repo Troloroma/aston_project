@@ -96,16 +96,19 @@ public class ConsoleApp {
 
         switch (input) {
             case "1" -> {
+                IdRegistry.clear();
                 people = generator.generateRandomPeople(arrayLength);
                 System.out.println("Сгенерировано объектов: " + people.size());
                 System.out.println("\nСгенерированные объекты:");
                 people.forEach(System.out::println);
             }
             case "2" -> {
+                IdRegistry.clear();
                 people = IoConsole.readCollectionFromConsole(arrayLength);
                 System.out.println("Введено объектов: " + people.size());
             }
             case "3" -> {
+                IdRegistry.clear();
                 System.out.print("Введите путь к файлу: (например, D://people.txt)\n");
                 String path = scanner.nextLine().trim();
                 people = FileEntityReader.readFromFile(path);
@@ -208,9 +211,5 @@ public class ConsoleApp {
         } catch (NumberFormatException e) {
             System.out.println("Ошибка: введите корректное число.");
         }
-    }
-
-    public static void main(String[] args) {
-        new ConsoleApp().run();
     }
 }

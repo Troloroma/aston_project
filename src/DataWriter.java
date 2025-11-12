@@ -1,6 +1,5 @@
 package src;
 
-import src.models.ComparableEntity;
 import src.models.Student;
 import src.models.Teacher;
 
@@ -25,8 +24,6 @@ public class DataWriter {
              BufferedWriter bw = new BufferedWriter(fw);
              PrintWriter out = new PrintWriter(bw)) {
 
-            out.println("--- Начало записи новой коллекции ---");
-
             for (T person : dataList) {
                 if (person instanceof Teacher t) {
                     out.println("Учитель");
@@ -47,7 +44,6 @@ public class DataWriter {
                 }
             }
 
-            out.println("--- Конец записи ---");
             System.out.println("Данные успешно добавлены в файл: " + filename);
 
         } catch (IOException e) {
