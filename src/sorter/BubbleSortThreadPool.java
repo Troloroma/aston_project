@@ -17,10 +17,10 @@ public class BubbleSortThreadPool<T extends Comparable<T>> implements ISortStrat
         if (t == null || t.size() <= 1) {return;}
 
 		// Создает пул из 2 потоков, которые будут выполнять задачи
-        ExecutorService executor = Executors.newFixedThreadPool(THREAD_COUNT);
+		ExecutorService executor = Executors.newFixedThreadPool(THREAD_COUNT);
 		int n = t.size();	// Размер списка
 		AtomicBoolean swapped = new AtomicBoolean(true);	// Флаг: были ли перестановки
-        // AtomicBoolean нужен для безопасного доступа из разных потоков
+		// AtomicBoolean нужен для безопасного доступа из разных потоков
 
 		try {
 			// Внешний цикл: повторяем фазы, пока хотя бы в одной фазе были перестановки
@@ -37,7 +37,6 @@ public class BubbleSortThreadPool<T extends Comparable<T>> implements ISortStrat
 			throw new RuntimeException("Сортировка прервана", e);
 		} finally {
 			executor.shutdown();
-            executor.close();
 		}
 
 		System.out.println("Список отсортирован пузырьком в " + THREAD_COUNT + " потоках.");
