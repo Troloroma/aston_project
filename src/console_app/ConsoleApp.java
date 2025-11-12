@@ -1,13 +1,18 @@
 package src.console_app;
 
+import src.DataWriter;
 import src.binary_search.BinarySearch;
+import src.counter.OccurrenceCounter;
 import src.entity_generator.EntityGenerator;
+import src.file_reader.FileEntityReader;
 import src.io.IoConsole;
 import src.models.*;
 import src.sorter.BubbleSortThreadPool;
 import src.sorter.ISortStrategy;
 
+
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Консольное приложение с циклом, реализующее:
@@ -18,7 +23,7 @@ import java.util.*;
  *     <li>Запуск сортировки (с использованием {@link EntityComparator})</li>
  *     <li>Запуск бинарного поиска (заглушка)</li>
  * </ul>
- *
+ * <p>
  * Выход возможен только через пункт меню.
  */
 public class ConsoleApp {
@@ -39,6 +44,8 @@ public class ConsoleApp {
                 case "3" -> showPeople();
                 case "4" -> sortPeople();
                 case "5" -> binarySearchById();
+                case "6" -> saveToFile();
+                case "7" -> countElementOccurrences();
                 case "0" -> {
                     System.out.println("Выход из программы...");
                     return;
@@ -57,6 +64,8 @@ public class ConsoleApp {
                 3 - Показать текущие данные
                 4 - Сортировка списка
                 5 - Бинарный поиск
+                6 - Сохранить данные в файл
+                7 - Посчитать число совпадений по Id
                 0 - Выход
                 =========================
                 """);
@@ -96,7 +105,13 @@ public class ConsoleApp {
                 people = IoConsole.readCollectionFromConsole(arrayLength);
                 System.out.println("Введено объектов: " + people.size());
             }
-            case "3" -> System.out.println("Чтение из файла пока не реализовано.");
+            case "3" -> {
+                System.out.print("Введите путь к файлу: (например, D://people.txt)\n");
+                String path = scanner.nextLine().trim();
+                people = FileEntityReader.readFromFile(path);
+                System.out.println("Загружено объектов: " + people.size());
+                people.forEach(System.out::println);
+            }
             default -> System.out.println("Некорректный выбор.");
         }
     }
@@ -118,8 +133,8 @@ public class ConsoleApp {
 
         System.out.println("Сортировка (BubbleSortThreadPool) с использованием 2 потоков...");
         System.out.println("Сортировка происходит в следующем порядке: сначала учителя, потом ученики.");
-        System.out.println("Учителя: фамилия -> имя -> id -> предмет преподавания -> опыт работы (в годах)");
-        System.out.println("Ученики: фамилия -> имя -> id -> класс -> возраст");
+        System.out.println("Учителя: id -> фамилия -> имя -> предмет преподавания -> опыт работы (в годах)");
+        System.out.println("Ученики: id -> фамилия -> имя -> класс -> возраст");
         ISortStrategy<ComparableEntity> sorter = new BubbleSortThreadPool<>();
         try {
             sorter.sort(people);
@@ -160,6 +175,38 @@ public class ConsoleApp {
             System.out.println("Найден объект: " + found);
         } else {
             System.out.println("Объект с id " + targetId + " не найден.");
+        }
+    }
+    private void saveToFile() {
+        if (people == null || people.isEmpty()) {
+            System.out.println("Список пуст — нечего сохранять.");
+            return;
+        }
+
+        System.out.print("Введите путь для сохранения (например, D://people.txt): ");
+        String path = scanner.nextLine().trim();
+
+        DataWriter.writeToFile(path, people);
+    }
+    private void countElementOccurrences() {
+        if (people == null || people.isEmpty()) {
+            System.out.println("Список пуст — нечего анализировать.");
+            return;
+        }
+
+        System.out.print("Введите ID (число), чтобы посчитать количество таких ID в коллекции: ");
+        String raw = scanner.nextLine().trim();
+
+        try {
+            int targetId = Integer.parseInt(raw);
+            List<Integer> ids = people.stream()
+                    .map(ComparableEntity::getId)
+                    .collect(Collectors.toList());
+
+            OccurrenceCounter.countOccurrences(ids, targetId);
+
+        } catch (NumberFormatException e) {
+            System.out.println("Ошибка: введите корректное число.");
         }
     }
 

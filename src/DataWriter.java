@@ -1,5 +1,9 @@
 package src;
 
+import src.models.ComparableEntity;
+import src.models.Student;
+import src.models.Teacher;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -22,9 +26,27 @@ public class DataWriter {
              PrintWriter out = new PrintWriter(bw)) {
 
             out.println("--- Начало записи новой коллекции ---");
-            for (T item : dataList) {
-                out.println(item.toString());
+
+            for (T person : dataList) {
+                if (person instanceof Teacher t) {
+                    out.println("Учитель");
+                    out.println("Имя: " + t.getFirstName());
+                    out.println("Фамилия: " + t.getLastName());
+                    out.println("Предмет: " + t.getSubject());
+                    out.println("Стаж: " + t.getExperience());
+                    out.println("id: " + t.getId());
+                    out.println(); // пустая строка между объектами
+                } else if (person instanceof Student s) {
+                    out.println("Ученик");
+                    out.println("Имя: " + s.getFirstName());
+                    out.println("Фамилия: " + s.getLastName());
+                    out.println("Класс: " + s.getGrade());
+                    out.println("Возраст: " + s.getAge());
+                    out.println("id: " + s.getId());
+                    out.println();
+                }
             }
+
             out.println("--- Конец записи ---");
             System.out.println("Данные успешно добавлены в файл: " + filename);
 

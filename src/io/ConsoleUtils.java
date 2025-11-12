@@ -1,7 +1,11 @@
 package src.io;
 
+import src.models.IdRegistry;
+
 import java.util.Arrays;
 import java.util.Scanner;
+
+
 
 public class ConsoleUtils {
 
@@ -31,6 +35,17 @@ public class ConsoleUtils {
                 } else return val;
             } catch (NumberFormatException e) {
                 System.out.println("Некорректное число. Повторите ввод.");
+            }
+        }
+    }
+
+    public static int readUniqueId(String message) {
+        while (true) {
+            int id = readInt(message, 0, Integer.MAX_VALUE);
+            if (IdRegistry.isIdUsed(id)) {
+                System.out.println("Такой ID уже существует. Введите другой.");
+            } else {
+                return id;
             }
         }
     }
