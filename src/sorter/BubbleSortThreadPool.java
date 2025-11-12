@@ -43,12 +43,34 @@ public class BubbleSortThreadPool<T extends Comparable<T>> implements ISortStrat
 		System.out.println("Список отсортирован пузырьком в " + THREAD_COUNT + " потоках.");
 	}
 
-	private void runPhase(ExecutorService executor, List<T> list, int n, AtomicBoolean swapped, int parity) throws InterruptedException {
+	/**
+	 *	Запускает фазу чётно-нечётной сортировки, распределяя независимые пары между потоками пула.
+	 *
+	 *	@param executor	пул потоков, выполняющих сравнения и перестановки
+	 *	@param list	текущий список, сортируемый по месту
+	 *	@param n	размер списка, ограничивающий итерации
+	 *	@param swapped	общий флаг наличия перестановок в любой фазе
+	 *	@param parity	чётность фазы: 0 для пар (0,1), 1 для (1,2) и т.д.
+	 *	@throws InterruptedException	если ожидающий поток был прерван при latch.await()
+	 */
+
+	//Пример: возьмём массив [5, 1, 4, 3], THREAD_COUNT = 2, чётная фаза (parity = 0).
+	//runPhase создаёт CountDownLatch(2) и phaseError.
+	//worker 0: startIndex = 0. В цикле:
+	//i = 0: сравниваем 5 и 1, меняем → [1, 5, 4, 3], localSwapped = true.
+	//i = 4 уже ≥ n - 1, цикл завершается, воркер фиксирует swapped.set(true) и latch.countDown().
+	//worker 1: startIndex = 2. В цикле:
+	//i = 2: сравниваем 4 и 3, меняем → [1, 5, 3, 4], localSwapped = true.
+	//i = 6 не входит, воркер тоже вызывает swapped.set(true) и latch.countDown().
+
+		private void runPhase(ExecutorService executor, List<T> list, int n, AtomicBoolean swapped, int parity) throws InterruptedException {
 		// Счётчик завершения всех рабочих задач фазы
 		CountDownLatch latch = new CountDownLatch(THREAD_COUNT);
 		// Храним первое исключение, если оно возникнет внутри любой задачи
 		AtomicReference<RuntimeException> phaseError = new AtomicReference<>();
 
+		// Для каждого воркера вычисляем стартовую позицию фазы и отдаём ему непересекающуюся 
+		//подпоследовательность пар
 		for (int worker = 0; worker < THREAD_COUNT; worker++) {
 			final int startIndex = parity + worker * 2;
 			if (startIndex >= n - 1) {
@@ -57,6 +79,7 @@ public class BubbleSortThreadPool<T extends Comparable<T>> implements ISortStrat
 				continue;
 			}
 
+			//ставит задачу в очередь пула и выполняет её на одном из фиксированных потоков
 			executor.submit(() -> {
 				try {
 					// Локальный флаг, чтобы не дергать AtomicBoolean без нужды
